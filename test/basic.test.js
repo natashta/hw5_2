@@ -1,21 +1,29 @@
-import getNumber from '../src/js/app';
+import findBy from '../src/js/app';
 
-test('should return number', () => {
-  expect(getNumber('80')).toBe(80);
+const info = [
+  {name: 'маг', type: 'character', description: 'Персонаж, обладающий магическими способностями'},
+  {name: 'заклинание', type: 'attack', description: 'Атака магическим заклинанием'},
+  {name: 'урон', type: 'help', description: 'Страница описания элемента интерфейса'},
+]
+
+const typeFinder = findBy('type', 'attack');
+
+test('search on name', () => {
+  const finder = findBy('name', 'урон');
+  const expected = [{name: 'урон', type: 'help', description: 'Страница описания элемента интерфейса',
+  }];
+  expect(info.filter(finder)).toEqual(expected);
 });
 
-test('input null should return error', () => {
-  expect(getNumber('0')).toEqual(Error('Ввод некорректен'));
+test('search on type', () => {
+  const finder = findBy('type', 'help');
+  const expected = [{name: 'урон', type: 'help', description: 'Страница описания элемента интерфейса',
+  }];
+  expect(info.filter(finder)).toEqual(expected);
 });
 
-test('input negative should return error', () => {
-  expect(getNumber('-1')).toEqual(Error('Ввод некорректен'));
-});
-
-test('input string should return error', () => {
-  expect(getNumber('string')).toEqual(Error('Ввод некорректен'));
-});
-
-test('input non decimal should return error', () => {
-  expect(getNumber('0xFF')).toEqual(Error('Ввод некорректен'));
+test('search on wrong name', () => {
+  const finder = findBy('name', 'zombie');
+  const expected = [];
+  expect(info.filter(finder)).toEqual(expected);
 });
