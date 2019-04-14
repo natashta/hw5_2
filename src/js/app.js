@@ -1,5 +1,2 @@
-const findBy = (name, value) => function (el) {
-  return el[name] === value;
-};
-
+const findBy = (name, value) => el => el[name] === value;
 export default findBy;
